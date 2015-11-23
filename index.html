@@ -1,25 +1,132 @@
-<!DOCTYPE html>
-<html>
-<head></head>
-    <body>
+    <!DOCTYPE html>
+    <html lang="es">
 
-    <p id="demo"></p>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>ParseQuellueve</title>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">    
+        <link href="css/main.css" rel="stylesheet">       
+        <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+    </head>
+
+    <body>
+        <header class="container">
+            <nav class="navbar navbar-default headerFooter" >
+                <div class="container-fluid">
+                    <div class="navbar-header ">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-headRight" aria-expanded="false">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">ParseQuellueve <span class="glyphicon glyphicon-cloud"></span></a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbar-headRight" >
+                        <ul class="nav navbar-nav navbar-right visible-xs">
+                            <li class="dropdown headerFooter">
+                                <a href="#" id="dropdownInput" class="dropdown-toggle headerFooter"  data-toggle="dropdown">
+                                    <span class="link" >¿Que tal hace en...?<b class="caret"></b></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <div class="input-group headerFooter container-fluid">
+                                            <input type="text" id="findInput" class="form-control" placeholder="Busca un lugar" >
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default btnHeader"  type="button">Ver el tiempo</button>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown headerFooter">
+                                <a href="#" class="dropdown-toggle">
+                                <span class="link">Elige una provincia:</span></a>
+                                <div class="form-group container-fluid">                                        
+                                    <select id="controlProvCollapse" class="form-control">
+                                        <option>Ejemplo 1</option>
+                                        <option>Ejemplo 2</option>
+                                        <option>Ejemplo 3</option>
+                                    </select>
+                                </div>                            
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+            </nav>
+        </header>
+
+        <div class="container">
+            <div class="row">
+                <section class="col-xs-12 col-md-7">
+                    <div class="panel panel-default">
+                        <div class="panel-heading center-block">
+                            aqui va el mapa
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="col-md-5">
+                    <form role="form" class="hidden-xs">
+                        <div class="form-group">
+                            <label id="Eprovincia">Elige una provincia:</label>
+                            <select id="controlProvincias" class="form-control">
+                                <option>Ejemplo 1</option>
+                                <option>Ejemplo 2</option>
+                                <option>Ejemplo 3</option>                            
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <input id ="buscaInput" type="text" class="form-control" placeholder="Busca un lugar para mostrar">
+                            <span class="input-group-btn">
+                                <button class="btn btnHeader" type="button">Ver el tiempo</button>
+                            </span>
+                        </div><br>
+                        <span class="help-block">Debes elegir cualquier de las opciones para ver el tiempo en el mapa</span>
+                    </form>
+
+                    <br>
+                    <h4>Práctica Final Opción Aplicación Móvil <small>Api del Tiempo</small></h4>                    
+                    <p>Se usará la api de la página <a target="_blank" href="http://openweathermap.org/api">http://openweathermap.org/api</a> para obtener información sobre el tiempo (temperatura) de mi posición actual.<br><br> Usar la API de Google Maps para pintar mi ubicación y en una                          ‘globa’ mostrar la información sobre el tiempo.</p>                
+                </aside>
+            </div>
+        </div>
+
+        <footer class="container">
+            <nav class="navbar navbar-default header headerFooter">
+                <div class="container-fluid">
+                    <div class="navbar-right">
+                        <a class="navbar-brand "  href="#">ParseQuellueve <span class="glyphicon glyphicon-cloud"></span></a>
+                    </div>
+                </div>
+            </nav>
+        </footer>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+
+            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfXz0CMkn9IBtrukUVHMvBsK9ird2ki18&libraries=places">
+    </script>
+
     </body>
-    <script> 
-var x=document.getElementById("demo");
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-function showPosition(position) {
-     /*x.innerHTML="gik"; */
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude; 
-}
-getLocation();
-</script>
-<p>hola</p>
-</html>
+
+    </html>
