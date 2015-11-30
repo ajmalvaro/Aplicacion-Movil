@@ -3,7 +3,8 @@
 //- llamada a la funcion que se encarga de obtener las coordenadas del 
 //- usuario.
 //- Cargamos las provincias mediante PARSE
-//- Obtenemos las coordenadas por cada vez que se eliga una provincia
+//- Obtenemos las coordenadas por cada vez que se eliga una provincia y cargamos el mapa
+// con los datos del tiempo
 
 $( document ).ready(function() {
     
