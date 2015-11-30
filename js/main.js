@@ -2,9 +2,16 @@
 //- Al cargarse la pagina, lo primero que haremos por defecto sera la
 //- llamada a la funcion que se encarga de obtener las coordenadas del 
 //- usuario.
-//-
+//- Cargamos las provincias mediante PARSE
+
 $( document ).ready(function() {
-getCoords();
+    
+//***************** ENLACE CON LA API DE PARSE ***********************//
+Parse.initialize("ehLDIQPkun90BtECgs0FfpBizCwfdRMa4GPiVvYY", "i5J8U5gSKXNV0YVNey9U94Mkn864ifk7xJvflg9P");
+    
+    getCoords();
+    getCountries();    
+    
 });
 //-
 //************************ FUNCION GETCOORDS() ***********************//
@@ -80,4 +87,30 @@ function getJsonDataWeather(latitud, longitud){
 }
 //***************** FIN FUNCION GETJSONDATAWEATHER() *****************//
 //-
+
+
+
+//- Recuperamos los datos de la provincia mediante parse
+function getCountries(){
+    
+    var Provincias = Parse.Object.extend("Provincias");
+    var query = new Parse.Query(Provincias);
+
+    query.find({
+      success: function(results) {
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+
+          //alert(object.id + ' - ' + object.get('nombreProvincia'));
+          $('#controlCountries').append("<option>"+object.get('nombreProvincia')+"</option>");
+          $('#controlCountrCollapse').append("<option>"+object.get('nombreProvincia')+"</option>");
+        }
+      },
+      error: function(error) {
+        alert("Error: " + error.code + " " + error.message);
+      }
+    });
+    
+}
+
 //----------------------- FIN CODIGO JAVASCRIPT ----------------------//
