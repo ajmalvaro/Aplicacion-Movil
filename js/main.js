@@ -3,6 +3,7 @@
 //- llamada a la funcion que se encarga de obtener las coordenadas del 
 //- usuario.
 //- Cargamos las provincias mediante PARSE
+//- Obtenemos las coordenadas por cada vez que se eliga una provincia
 
 $( document ).ready(function() {
     
@@ -10,7 +11,8 @@ $( document ).ready(function() {
 Parse.initialize("ehLDIQPkun90BtECgs0FfpBizCwfdRMa4GPiVvYY", "i5J8U5gSKXNV0YVNey9U94Mkn864ifk7xJvflg9P");
     
     getCoords();
-    getCountries();    
+    getCountries();   
+    getgeoCode();
     
 });
 //-
@@ -89,7 +91,6 @@ function getJsonDataWeather(latitud, longitud){
 //-
 
 
-
 //- Recuperamos los datos de la provincia mediante parse
 function getCountries(){
     
@@ -113,4 +114,46 @@ function getCountries(){
     
 }
 
+//Está funcion se encarga de obtener las coordenadas cada vez que selecciona una provincia en las dos 
+//listas desplegables
+
+function getgeoCode(){
+    
+    $('#controlCountries').change(function() { 
+        var geocoder = new google.maps.Geocoder();          
+        var address = $("#controlCountries option:selected").text();
+        
+        geocodeCountries(geocoder,address);
+    }); 
+    
+    $('#controlCountrCollapse').change(function() {
+        var geocoder = new google.maps.Geocoder(); 
+        var address = $("#controlCountrCollapse option:selected").text();
+        
+        geocodeCountries(geocoder,address);
+    }); 
+    
+
+    function geocodeCountries(geocoder,address){
+        var pos;
+        geocoder.geocode({'address': address}, function(results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+            
+            console.log(results[0].geometry.location.lat());
+            console.log(results[0].geometry.location.lng());
+            
+            pos = {
+                lat: results[0].geometry.location.lat(),
+                lng: results[0].geometry.location.lng()
+            }
+            initMap(pos);            
+
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+}
+
 //----------------------- FIN CODIGO JAVASCRIPT ----------------------//
+
