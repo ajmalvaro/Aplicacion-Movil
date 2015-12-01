@@ -42,7 +42,8 @@ function(error){ alert(error.message); },
 function initMap(pos) {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -34.397, lng: 150.644},
-    zoom: 11
+    zoom: 11,
+    disableDefaultUI: true
   });
   var infoWindow = new google.maps.InfoWindow({map: map,maxWidth: 200});
   infoWindow.setPosition(pos);
