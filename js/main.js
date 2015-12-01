@@ -42,7 +42,8 @@ function(error){ alert(error.message); },
 function initMap(pos) {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -34.397, lng: 150.644},
-    zoom: 11
+    zoom: 11,
+    disableDefaultUI: true
   });
   var infoWindow = new google.maps.InfoWindow({map: map,maxWidth: 200});
   infoWindow.setPosition(pos);
@@ -75,11 +76,11 @@ function getJsonDataWeather(latitud, longitud){
         degreesMin=parseInt(json.main.temp_min);
         degreesMax=parseInt(json.main.temp_max);
     	mydata = "<b>"+json.name+" </b><b>"+degrees+
-                 "&ordm;C </b><img src='http://openweathermap.org/img/w/"+
-                 json.weather[0].icon+".png'/> <br/>"+
+                 "&ordm;C </b><img height=35px src='http://openweathermap.org/img/w/"+
+                 json.weather[0].icon+".png'/><br/>"+
                  json.weather[0].description+"<br/> Humedad: <b>"+
-                 json.main.humidity+"&#37;</b><br/>Temp. minima: <b>"+
-                 degreesMin+"&ordm;C</b><br/>Temp. maxima: <b>"+
+                 json.main.humidity+"&#37;</b><br/>T. Min.: <b>"+
+                 degreesMin+"&ordm;C</b> T. Max.: <b>"+
                  degreesMax+ "&ordm;C</b>";
   }
 });

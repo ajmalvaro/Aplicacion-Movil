@@ -20,6 +20,10 @@
 }
 
 #map {
-    height:350px;
+    height:370px;
     width:100%;
+}
+div.gm-style-iw {
+    max-height:115px;
+    overflow-y:auto;
 }
