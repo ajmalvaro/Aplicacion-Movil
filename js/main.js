@@ -66,7 +66,7 @@ function initMap(pos, cityandcountry) {
 function getJsonDataWeather(latitud, longitud, cityandcountry){
 
       var ApiWeatherUrl;
-      if (cityandcountry = null){
+      if (cityandcountry != null){
          ApiWeatherUrl="http://api.openweathermap.org/data/2.5/weather?units=metric&q="+ cityandcountry +
          "&APPID=71381e39f2a1a57a768c92a11fff4cc5&lang=es";  
 
