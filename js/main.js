@@ -13,14 +13,14 @@ Parse.initialize("ehLDIQPkun90BtECgs0FfpBizCwfdRMa4GPiVvYY", "i5J8U5gSKXNV0YVNey
     getCoords();
     getCountries();    
     getgeoCode();
-    
+    setListeners();
 });
 //-
 //************************ FUNCION GETCOORDS() ***********************//
 //- Esta funcion obtiene las coordenadas mediante el objeto 
 //- navigator.geolocation soportado por HTML5. En caso de no poder 
-//- obtenerlas, mostrará un mensaje descriptivo de error.
-//- En caso de éxito, devuelve el objeto 'pos' con las propiedades lat 
+//- obtenerlas, mostrarÃ¡ un mensaje descriptivo de error.
+//- En caso de Ã©xito, devuelve el objeto 'pos' con las propiedades lat 
 //- (latitud) y long (longitud).
 //-
 function getCoords(){ 
@@ -66,27 +66,16 @@ function initMap(pos, cityandcountry) {
 function getJsonDataWeather(latitud, longitud, cityandcountry){
 
       var ApiWeatherUrl;
-      if (cityandcountry != null){
-         ApiWeatherUrl="http://api.openweathermap.org/data/2.5/weather?units=metric&q="+ cityandcountry +
-         "&APPID=71381e39f2a1a57a768c92a11fff4cc5&lang=es";  
-
-      }
-
-      else
-
-      {
-         ApiWeatherUrl="http://api.openweathermap.org/data/2.5/weather?units=metric&lat="+
-         latitud +"&lon="+ longitud +"&APPID=71381e39f2a1a57a768c92a11fff4cc5&lang=es";
-
-      }
-
       var mydata;
-
+      var LocalityName;
       var degrees;
-
       var degreesMin;
-
       var degreesMax;
+      
+      ApiWeatherUrl="http://api.openweathermap.org/data/2.5/weather?units=metric&lat="+
+      latitud +"&lon="+ longitud +"&APPID=71381e39f2a1a57a768c92a11fff4cc5&lang=es";
+
+      
 
                   $.ajax({
 
@@ -97,6 +86,11 @@ function getJsonDataWeather(latitud, longitud, cityandcountry){
                 dataType: 'json',
 
                 success: function (json) {
+               if (cityandcountry == null){
+               	   LocalityName=json.name;
+               }else{
+               	   LocalityName=cityandcountry;  
+               }
 
         degrees=parseInt(json.main.temp);
 
@@ -104,7 +98,7 @@ function getJsonDataWeather(latitud, longitud, cityandcountry){
 
         degreesMax=parseInt(json.main.temp_max);
 
-                mydata = "<b>"+json.name+" </b><b>"+degrees+
+                mydata = "<b>"+LocalityName+" </b><b>"+degrees+
 
                  "&ordm;C </b><img height=35px src='http://openweathermap.org/img/w/"+
 
@@ -121,18 +115,14 @@ function getJsonDataWeather(latitud, longitud, cityandcountry){
   }
 
 });
-
                 return mydata;
-
 }
-
-
 //***************** FIN FUNCION GETJSONDATAWEATHER() *****************//
 //-
-
-
-
-//- Recuperamos los datos de la provincia mediante parse
+//************************ FUNCION GETCOUNTRIES() ********************//
+//- Recuperamos los datos de la provincia mediante una tabla Provincias 
+//- creada en PARSE
+//-
 function getCountries(){
     
     var Provincias = Parse.Object.extend("Provincias");
@@ -145,12 +135,12 @@ function getCountries(){
 
             $('#controlCountries')
             .append("<option value='"
-                    +object.get('nombreProvincia')+", "+object.get('cod_Pais')+"' >"
+                    +object.get('nombreProvincia')+"' >"
                         +object.get('nombreProvincia')+"</option>");
 
             $('#controlCountrCollapse')
             .append("<option value='"
-                    +object.get('nombreProvincia')+", "+object.get('cod_Pais')+"' >"
+                    +object.get('nombreProvincia')+"' >"
                         +object.get('nombreProvincia')+"</option>");
         }
       },
@@ -160,10 +150,12 @@ function getCountries(){
     });
     
 }
-
-//Está funcion se encarga de obtener las coordenadas cada vez que selecciona una provincia en las dos 
-//listas desplegables
-
+//***************** FIN FUNCION GETCOUNTRIES() *********************//
+//-
+//************************ FUNCION GETGEOCODE() ********************//
+//Esta funcion se encarga de obtener las coordenadas cada vez que selecciona 
+//una provincia en las dos listas desplegables
+//-
 function getgeoCode(){
     
     $('#controlCountries').change(function() { 
@@ -192,10 +184,6 @@ function getgeoCode(){
         var pos;
         geocoder.geocode({'address': address}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
-            
-            //console.log(results[0].geometry.location.lat());
-            //console.log(results[0].geometry.location.lng());
-            
             pos = {
                 lat: results[0].geometry.location.lat(),
                 lng: results[0].geometry.location.lng()
@@ -208,4 +196,90 @@ function getgeoCode(){
       });
     }
 }
+//***************** FIN FUNCION GETGEOCODE() *************************//
+//-
+//************************ FUNCION SETLISTENERS() ********************//
+//Esta funcion crea los listeners para las cajas de texto que recibirán el 
+//autocompletado de google places, controlando que solo se muestre si han pulsa-
+//do 3 o mas teclas.
+//-
+function setListeners(){
+       $("#pac-input").keyup(function(e) {
+            $("#pac-input2").val("");      
+            if ($("#pac-input").val().length < 3)
+            {
+                $('.pac-container').css("visibility", 'hidden');
+            }
+            else
+            {
+               $('.pac-container').css("visibility", 'visible');
+            }
+});  
+        $("#pac-input2").keyup(function(e) {
+            $("#pac-input").val("");
+            if ($("#pac-input2").val().length < 3)
+            {
+                $('.pac-container').css("visibility", 'hidden');
+            }
+            else
+            {
+               $('.pac-container').css("visibility", 'visible');
+            }
+});  
+getPlaces();
+getPlaces2();
+}
+//***************** FIN FUNCION SETLISTENERS() *************************//
+//-
+//************************ FUNCION GETPLACES() *************************//
+//Esta funcion se encarga de cargar el autocompletado 
+//autocompletado de google places
+//-
+function getPlaces(){
+var input = document.getElementById('pac-input');
+var cityname;
+  var searchBox = new google.maps.places.SearchBox(input, {
+  types: ['cities']
+});
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) {
+      return;
+    }
+	var posCords = {
+        lat: places[0].geometry.location.lat(),
+        lng: places[0].geometry.location.lng()
+      }
+	cityname=places[0].address_components[0].long_name;
+	initMap(posCords,cityname);
+  });
+}
+//***************** FIN FUNCION GETPLACES() *************************//
+//-
+//************************ FUNCION GETPLACES2() *********************//
+//Esta funcion se encarga de cargar el autocompletado 
+//autocompletado de google places para la caja que se muestra en pantallas
+//pequeñas (moviles).
+//-
+function getPlaces2(){
+var input2 = document.getElementById('pac-input2');
+var citycountry;
+  var searchBox = new google.maps.places.SearchBox(input2, {
+  types: ['cities']
+});
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) {
+      return;
+    }
+	var posCords = {
+        lat: places[0].geometry.location.lat(),
+        lng: places[0].geometry.location.lng()
+      }
+        cityname=places[0].address_components[0].long_name;
+	initMap(posCords,cityname);
+  });
+}
+//***************** FIN FUNCION GETPLACES2() *************************//
+//-
 //----------------------- FIN CODIGO JAVASCRIPT ----------------------//
