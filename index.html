@@ -43,12 +43,12 @@
                                     <span class="link" >¿Que tal hace en...?<b class="caret"></b></span></a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <div class="input-group headerFooter container-fluid">
-                                            <input id="pac-input2" class="controls form-control" type="text" placeholder="Busca un lugar">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default btnHeader"  type="button">Ver el tiempo</button>
-                                            </span>
-                                        </div>
+                                        <form class="form-horizontal">
+                                             <div class="container-fluid">               
+                                            <input id="pac-input2" class="form-control" type="text" placeholder="Busca un lugar">
+                                            </div>
+                                        
+                                        </form>
                                     </li>
                                 </ul>
                             </li>
@@ -78,24 +78,21 @@
                 </section>
 
                 <aside class="col-xs-12 col-md-5">
-                    <form role="form" class="hidden-xs">
-                        <div class="form-group">
+                    <form role="form" class="hidden-xs form-horizontal">
+                        
                             <label id="Eprovincia">Elige una provincia:</label>
                             <select id="controlCountries" class="form-control">
                                 <option value="nullValue">Elige una ciudad</option>
-                            </select>
-                        </div>
-
-                        <div class="input-group">
-                            <input id="pac-input" class="controls form-control" type="text" placeholder="Busca un lugar para mostrar">
-                            <span class="input-group-btn">
-                                <button class="btn btnHeader" type="button">Ver el tiempo</button>
-                            </span>
-                        </div><br>
+                            </select><br>
+                            <input id="pac-input" class="form-control" type="text" placeholder="Busca un lugar para mostrar">
+                   
+                  <br>
+                            
+                       
                         <span class="help-block">Debes elegir cualquier de las opciones para ver el tiempo en el mapa</span>
                     </form>
 
-                    <br>
+                   
                     <h4>Práctica Final Opción Aplicación Móvil <small>Api del Tiempo</small></h4>                    
                     <p>Se usará la api de la página <a target="_blank" href="http://openweathermap.org/api">http://openweathermap.org/api</a> para obtener información sobre el tiempo (temperatura) de mi posición actual.<br><br> Usar la API de Google Maps para pintar mi ubicación y en una globa mostrar la información sobre el tiempo.</p>                
                 </aside>
