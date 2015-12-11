@@ -27,4 +27,4 @@ Consta de 3 opciones:
    **Google Places: Servicio de google de consulta de sitios. Utilizamos este servicio para la búsqueda predictiva de lugares en función
                     de lo que ingrese el usuario en una caja de texto.
 
-#Fernando y Álvaro, 2015.
+# Fernando y Álvaro, 2015.
