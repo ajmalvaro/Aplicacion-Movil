@@ -14,6 +14,7 @@ Parse.initialize("ehLDIQPkun90BtECgs0FfpBizCwfdRMa4GPiVvYY", "i5J8U5gSKXNV0YVNey
     getCountries();    
     getgeoCode();
     setListeners();
+    initInputSelect();
 });
 //-
 //************************ FUNCION GETCOORDS() ***********************//
@@ -164,6 +165,7 @@ function getgeoCode(){
         var value   = $("#controlCountries").val();  
         
         if (value!="nullValue"){
+             $('#pac-input').val("");
             geocodeCountries(geocoder,address,value);
             } 
     }); 
@@ -172,9 +174,9 @@ function getgeoCode(){
         var geocoder = new google.maps.Geocoder(); 
         var address = $("#controlCountrCollapse option:selected").text();
         var value   = $("#controlCountrCollapse").val();                   
-        
-        
+                
         if (value!="nullValue"){
+             $('#pac-input2').val("");
             geocodeCountries(geocoder,address,value);
         }
     }); 
@@ -282,4 +284,29 @@ var citycountry;
 }
 //***************** FIN FUNCION GETPLACES2() *************************//
 //-
+
+//************************ FUNCION initInputSelect() *************************//
+//Esta funcion se encarga de inicializar los valores del select e input 
+//en función de la elección
+
+function initInputSelect(){
+    $('#pac-input').focus(function() {
+        $('#controlCountries > option[value="nullValue"]').attr('selected', 'selected');
+        
+        if($('#pac-input').val()!=''){
+            $('#pac-input').val("");
+        }
+    });
+    
+    $('#pac-input2').focus(function() {
+        $('#controlCountrCollapse > option[value="nullValue"]').attr('selected', 'selected');
+        if($('#pac-input2').val()!=''){
+            $('#pac-input2').val("");
+        }
+    });    
+    
+}
+//***************** FIN FUNCION initInputSelect() *************************//
+//-
+
 //----------------------- FIN CODIGO JAVASCRIPT ----------------------//
